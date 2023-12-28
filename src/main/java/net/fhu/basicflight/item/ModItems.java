@@ -1,6 +1,7 @@
 package net.fhu.basicflight.item;
 
 import net.fhu.basicflight.BasicFlight;
+import net.fhu.basicflight.item.custom.FlightItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -12,7 +13,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, BasicFlight.MOD_ID);
 
     public static final RegistryObject<Item> RING = ITEMS.register("ring",
-            () -> new Item(new Item.Properties()));
+            () -> new FlightItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
