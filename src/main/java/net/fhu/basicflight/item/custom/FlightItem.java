@@ -9,21 +9,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class FlightItem extends Item {
     public FlightItem(Properties pProperties) {
         super(pProperties);
     }
 
-    @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
-        if(player.isLocalPlayer()) {
-            player.getAbilities().mayfly = true;
-            player.getAbilities().flying = true;
-        }else {
-            player.getAbilities().mayfly = false;
-            player.getAbilities().flying = false;
-        }
-    }
 }
