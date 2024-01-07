@@ -13,7 +13,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, BasicFlight.MOD_ID);
 
     public static final RegistryObject<Item> RING = ITEMS.register("ring",
-            () -> new FlightItem(new Item.Properties()));
+            () -> new FlightItem(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

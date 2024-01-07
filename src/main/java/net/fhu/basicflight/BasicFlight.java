@@ -2,7 +2,9 @@ package net.fhu.basicflight;
 
 import com.mojang.logging.LogUtils;
 import net.fhu.basicflight.item.ModItems;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -12,6 +14,7 @@ import net.minecraftforge.common.extensions.IForgeItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -58,20 +61,33 @@ public class BasicFlight {
 
     }
     boolean compatChecker = false;
+    private void startFlying(Player player) {
+        player.onUpdateAbilities();
+        player.getAbilities().mayfly = true;
+    }
+    private void stopFlying(Player player) {
+        player.onUpdateAbilities();
+        player.getAbilities().mayfly = false;
+        player.getAbilities().flying = false;
+    }
     @SubscribeEvent
     public void FlightCheck(TickEvent.PlayerTickEvent event) {
         Inventory inv = event.player.getInventory();
         IForgeItem ring = ModItems.RING.get();
         boolean ShouldFly = inv.contains(new ItemStack((ItemLike) ring));
         if (ShouldFly) {
-            event.player.getAbilities().mayfly = true;
-            this.compatChecker = true;
-        }
-        if (!ShouldFly && (!event.player.isCreative()) && compatChecker) {
+            this.startFlying(event.player);
+            if(!compatChecker) {
+                this.compatChecker =true;
+            }
+        } else if (compatChecker && !event.player.isCreative()) {
             this.compatChecker = false;
-            event.player.getAbilities().mayfly = false;
-            event.player.getAbilities().flying = false;
+            this.stopFlying(event.player);
+            event.setResult(Event.Result.DENY);
+
         }
+
+
     }
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
