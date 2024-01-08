@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import net.fhu.basicflight.registries.CreativeTabRegistry;
 import net.fhu.basicflight.registries.ItemRegistry;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
