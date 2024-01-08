@@ -1,6 +1,5 @@
-package net.fhu.basicflight.registrys;
+package net.fhu.basicflight.registries;
 
-import net.fhu.basicflight.BasicFlight;
 import net.fhu.basicflight.item.custom.FlightItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.common.Mod;
