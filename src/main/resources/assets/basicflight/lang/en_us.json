@@ -1,3 +1,4 @@
 {
-  "item.basicflight.ring": "Husk of Flight"
+  "item.basicflight.ring": "Husk of Flight",
+  "Tooltip.basicflight.flightitem.tooltip":"Allows you to fly in survival"
 }
