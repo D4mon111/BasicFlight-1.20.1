@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "catagory": "misc",
+  "pattern": [
+    "NCN",
+    "CFC",
+    "NBN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "C": {
+      "item": "minecraft:end_crystal"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "B": {
+      "item": "minecraft:beacon"
+    }
+  },
+  "result": {
+    "item": "basicflight:ring"
+  }
+}
