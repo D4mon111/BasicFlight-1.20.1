@@ -41,9 +41,9 @@ public class BasicFlight {
     }
     boolean compatChecker = false;
     private void AllowFlying(Player player) {
+        player.fallDistance = 0f; // janky fix buh wharevere
         if (player instanceof LocalPlayer) {
             player.onUpdateAbilities();
-            System.out.println(player);
             player.getAbilities().mayfly = true;
             player.onUpdateAbilities();
         }
@@ -51,7 +51,6 @@ public class BasicFlight {
     private void DisallowFlying(Player player) {
         if (player instanceof LocalPlayer) {
             // what the fuck?? why??? it works only when you specifically update the LOCAL player???
-            System.out.println(player);
             player.getAbilities().mayfly = false;
             player.getAbilities().flying = false;
             player.onUpdateAbilities();
