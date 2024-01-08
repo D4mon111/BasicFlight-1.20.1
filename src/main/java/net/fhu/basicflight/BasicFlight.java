@@ -3,6 +3,8 @@ package net.fhu.basicflight;
 import com.mojang.logging.LogUtils;
 import net.fhu.basicflight.registries.CreativeTabRegistry;
 import net.fhu.basicflight.registries.ItemRegistry;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,14 +40,22 @@ public class BasicFlight {
 
     }
     boolean compatChecker = false;
-    private void startFlying(Player player) {
-        player.getAbilities().mayfly = true;
-        player.onUpdateAbilities();
+    private void AllowFlying(Player player) {
+        if (player instanceof LocalPlayer) {
+            player.onUpdateAbilities();
+            System.out.println(player);
+            player.getAbilities().mayfly = true;
+            player.onUpdateAbilities();
+        }
     }
-    private void stopFlying(Player player) {
-        player.getAbilities().mayfly = false;
-        player.getAbilities().flying = false;
-        player.onUpdateAbilities();
+    private void DisallowFlying(Player player) {
+        if (player instanceof LocalPlayer) {
+            // what the fuck?? why??? it works only when you specifically update the LOCAL player???
+            System.out.println(player);
+            player.getAbilities().mayfly = false;
+            player.getAbilities().flying = false;
+            player.onUpdateAbilities();
+        }
     }
     // you could probably get away by running the event in a separate flighthandler class by using modeventbus/forgeeventbus
     // but i dont wanna do that cause this is easier
@@ -55,13 +65,11 @@ public class BasicFlight {
         IForgeItem ring = ItemRegistry.RING.get();
         boolean ShouldFly = inv.contains(new ItemStack((ItemLike) ring));
         if (ShouldFly) {
-            this.startFlying(event.player);
-            if(!compatChecker) {
-                this.compatChecker =true;
-            }
-        } else if (compatChecker && !event.player.isCreative()) {
+            this.AllowFlying(event.player);
+            this.compatChecker = true;
+        } else if (compatChecker && !(event.player.isCreative() | event.player.isSpectator())) {
             this.compatChecker = false;
-            this.stopFlying(event.player);
+            this.DisallowFlying(event.player);
 
         }
 
